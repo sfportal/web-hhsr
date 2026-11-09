@@ -6,8 +6,8 @@
   --font:"Be Vietnam Pro",system-ui,sans-serif;--serif:"Lora",Georgia,serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:auto}
-body{font-family:var(--font);color:var(--ink);background:var(--cream);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:auto;overflow-x:hidden;overflow-x:clip}
+body{font-family:var(--font);color:var(--ink);background:var(--cream);line-height:1.65;overflow-x:hidden;overflow-x:clip;-webkit-font-smoothing:antialiased}
 img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 b{font-weight:700}
@@ -71,8 +71,13 @@ html:not(.js) .loader{display:none}
 @media (max-width:960px){
   .nav__burger{display:block}
   .nav__links{position:fixed;inset:0;background:var(--green-900);flex-direction:column;justify-content:center;gap:28px;clip-path:circle(0 at calc(100% - 40px) 40px);transition:clip-path .7s var(--ease);z-index:-1}
-  .nav__links a{font-size:1.5rem}
+  .nav__links a{font-size:1.35rem}
+  .nav__links{padding-top:70px;gap:20px!important}
   .nav.open .nav__links{clip-path:circle(150% at calc(100% - 40px) 40px)}
+  .nav.open{transform:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--green-900)}
+  .nav__links{height:100vh;height:100dvh;width:100vw;visibility:hidden;transition:clip-path .7s var(--ease),visibility 0s .7s}
+  .nav.open .nav__links{visibility:visible;transition:clip-path .7s var(--ease)}
+  body.menu-open{overflow:hidden}
 }
 
 /* hero */
@@ -406,3 +411,6 @@ html:not(.js) .loader{display:none}
 .tstrip figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;color:#fff;font-weight:600;font-size:.9rem;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent)}
 @media (max-width:1000px){.train__stats,.programs{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.train__stats,.programs{grid-template-columns:1fr}}
+
+main,.footer,.marquee{max-width:100%}
+main{overflow-x:hidden;overflow-x:clip}

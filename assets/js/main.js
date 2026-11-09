@@ -19,8 +19,8 @@
 
   /* ---------- nav ---------- */
   const nav = $('#nav');
-  $('#burger').addEventListener('click', () => nav.classList.toggle('open'));
-  $$('#navLinks a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+  $('#burger').addEventListener('click', () => { nav.classList.toggle('open'); document.body.classList.toggle('menu-open', nav.classList.contains('open')); });
+  $$('#navLinks a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); document.body.classList.remove('menu-open'); }));
   const onScroll = () => {
     nav.classList.toggle('scrolled', scrollY > 60);
     const h = document.documentElement.scrollHeight - innerHeight;
@@ -129,7 +129,7 @@
   const intro = () => {
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
     tl.to('.hero__title .word', { yPercent: 0, duration: 1.4, stagger: .08 })
-      .to(['.nav', '.hero__eyebrow'], { autoAlpha: 1, y: 0, duration: 1 }, '-=1.1')
+      .to(['.nav', '.hero__eyebrow'], { autoAlpha: 1, y: 0, duration: 1, clearProps: 'transform' }, '-=1.1')
       .to(['.hero__lead', '.hero__actions'], { autoAlpha: 1, y: 0, duration: 1, stagger: .12 }, '-=.9')
       .fromTo('.hero__badge', { autoAlpha: 0, scale: .4, rotate: -90, y: 0 }, { autoAlpha: 1, scale: 1, rotate: 0, duration: 1.4, ease: 'back.out(1.6)' }, '-=.9')
       .fromTo('.hero__video', { scale: 1.3 }, { scale: 1.08, duration: 2.4, ease: 'power2.out' }, 0);
