@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#cfe6da" stroke-width="1"/></pattern>
+    <pattern id="t" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="3.2" fill="#2f8f5e" opacity=".55"/></pattern>
+  </defs>
+  <rect width="400" height="300" fill="#eaf5ef"/>
+  <rect width="400" height="300" fill="url(#g)"/>
+  <path d="M0 210 C 90 190, 160 240, 260 215 S 380 180, 400 190" fill="none" stroke="#c9b48a" stroke-width="10" stroke-linecap="round"/>
+  <g stroke="#084C46" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M30 40 L150 30 L160 120 L40 135 Z" fill="url(#t)"/>
+    <path d="M30 40 L150 30 L160 120 L40 135 Z" fill="#35A576" fill-opacity=".28"/>
+    <path d="M165 28 L280 22 L285 105 L172 118 Z" fill="#35A576" fill-opacity=".45"/>
+    <path d="M165 28 L280 22 L285 105 L172 118 Z" fill="url(#t)"/>
+    <path d="M290 30 L370 40 L360 140 L292 120 Z" fill="#f5c518" fill-opacity=".5"/>
+    <path d="M290 30 L370 40 L360 140 L292 120 Z" fill="url(#t)"/>
+    <path d="M45 145 L165 128 L175 190 L60 200 Z" fill="#35A576" fill-opacity=".35"/>
+    <path d="M45 145 L165 128 L175 190 L60 200 Z" fill="url(#t)"/>
+    <path d="M178 126 L290 112 L300 180 L185 192 Z" fill="#35A576" fill-opacity=".55"/>
+    <path d="M178 126 L290 112 L300 180 L185 192 Z" fill="url(#t)"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-weight="700" font-size="15" fill="#084C46" text-anchor="middle">
+    <text x="95" y="90">Lô A1</text><text x="225" y="75">Lô A2</text><text x="328" y="92">Lô A3</text><text x="110" y="172">Lô A4</text><text x="240" y="158">Lô A5</text>
+  </g>
+  <g transform="translate(225 52)"><path d="M0 0c-8 0-14 6-14 14 0 10 14 24 14 24s14-14 14-24c0-8-6-14-14-14z" fill="#e8463a"/><circle cx="0" cy="14" r="5" fill="#fff"/></g>
+  <rect x="12" y="250" width="250" height="36" rx="10" fill="#fff" stroke="#cfe6da"/>
+  <text x="24" y="273" font-family="Arial, sans-serif" font-size="13" fill="#4b6b60">📍 Bản đồ lô mô phỏng · dữ liệu minh họa</text>
+</svg>
