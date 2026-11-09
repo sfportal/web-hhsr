@@ -200,6 +200,29 @@
   const o525 = { v: 0 }; big.textContent = '0';
   gsap.to(o525, { v: 525, duration: 2.4, ease: 'power4.out', scrollTrigger: { trigger: '.guinness', start: 'top 70%' }, onUpdate: () => { big.textContent = Math.round(o525.v); } });
 
+
+  /* ===== FarmBase ===== */
+  gsap.from('.evo__old', { x: -120, autoAlpha: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '#evo', start: 'top 80%' } });
+  gsap.fromTo('.evo__line', { strokeDasharray: 150, strokeDashoffset: 150 }, { strokeDashoffset: 0, duration: 1, delay: .4, ease: 'power2.inOut', scrollTrigger: { trigger: '#evo', start: 'top 80%' } });
+  gsap.from('.evo__head', { autoAlpha: 0, x: -20, duration: .5, delay: 1.2, scrollTrigger: { trigger: '#evo', start: 'top 80%' } });
+  gsap.from('.evo__new', { scale: .4, autoAlpha: 0, rotate: -8, duration: 1.3, delay: 1.1, ease: 'back.out(1.8)', scrollTrigger: { trigger: '#evo', start: 'top 80%' } });
+  gsap.from('.fstat', { y: 50, autoAlpha: 0, stagger: .1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: '.fb__stats', start: 'top 85%' } });
+  gsap.from('.flow__node', { y: 60, autoAlpha: 0, scale: .9, stagger: .18, duration: 1, ease: 'back.out(1.4)', scrollTrigger: { trigger: '#flow', start: 'top 80%' } });
+  gsap.fromTo('.mock__browser', { rotateX: 28, y: 80, scale: .9, autoAlpha: 0 }, { rotateX: 0, y: 0, scale: 1, autoAlpha: 1, ease: 'power2.out', scrollTrigger: { trigger: '.mock', start: 'top 90%', end: 'top 35%', scrub: 1 } });
+  gsap.from('.chip', { scale: 0, autoAlpha: 0, stagger: .15, duration: .8, ease: 'back.out(2)', scrollTrigger: { trigger: '.mock', start: 'top 55%' } });
+  gsap.from('.feat', { y: 50, autoAlpha: 0, stagger: .1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: '.fb__features', start: 'top 85%' } });
+  gsap.to('.fb__grid-bg', { yPercent: 20, ease: 'none', scrollTrigger: { trigger: '.fb', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  /* journey */
+  gsap.to('#jFill', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.journey__steps', start: 'top 70%', end: 'bottom 70%', scrub: true } });
+  $$('.jstep').forEach(st => {
+    gsap.from(st, { x: 80, autoAlpha: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: st, start: 'top 85%' } });
+    gsap.from($('img', st), { scale: 1.3, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: st, start: 'top 85%' } });
+  });
+
+  /* training */
+  gsap.from('.tstat', { y: 60, autoAlpha: 0, rotateX: -20, stagger: .1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.train__stats', start: 'top 85%' } });
+
   /* bento */
   gsap.from('.bento__item', { y: 70, autoAlpha: 0, scale: .94, duration: 1, stagger: { each: .08, from: 'start' }, ease: 'power3.out', scrollTrigger: { trigger: '.bento', start: 'top 82%' } });
 
