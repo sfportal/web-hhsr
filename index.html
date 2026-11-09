@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hiệp hội Sầu riêng tỉnh Đắk Lắk · Kết nối &amp; Nâng tầm Sầu riêng Đắk Lắk</title>
+<meta name="description" content="Hiệp hội Sầu riêng tỉnh Đắk Lắk: nơi cập nhật chính sách, thị trường, sự kiện ngành sầu riêng tại Đắk Lắk và cả nước. Kỷ lục Guinness đoàn xe bán tải chở sầu riêng dài nhất thế giới, Lễ hội Sầu riêng Đắk Lắk 2026.">
+<meta property="og:title" content="Hiệp hội Sầu riêng tỉnh Đắk Lắk">
+<meta property="og:description" content="Kết nối &amp; Nâng tầm Sầu riêng Đắk Lắk">
+<meta property="og:image" content="assets/img/banner.jpg">
+<meta name="theme-color" content="#0b2e1c">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__ring">
+    <img src="assets/img/logo.png" alt="">
+    <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56"/></svg>
+  </div>
+  <div class="loader__count"><span id="loaderNum">0</span>%</div>
+  <div class="loader__text">Kết nối &amp; Nâng tầm Sầu riêng Đắk Lắk</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="progress" id="progress"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__brand">
+    <img src="assets/img/logo.png" alt="Logo Hiệp hội Sầu riêng tỉnh Đắk Lắk">
+    <span><b>Hiệp hội Sầu riêng</b><small>Tỉnh Đắk Lắk</small></span>
+  </a>
+  <nav class="nav__links" id="navLinks">
+    <a href="#gioi-thieu">Giới thiệu</a>
+    <a href="#linh-vuc">Lĩnh vực</a>
+    <a href="#ky-luc">Kỷ lục Guinness</a>
+    <a href="#le-hoi">Lễ hội 2026</a>
+    <a href="#hanh-trinh">Hành trình</a>
+    <a href="#bao-chi">Báo chí</a>
+    <a href="#lien-he" class="nav__cta">Liên hệ</a>
+  </nav>
+  <button class="nav__burger" id="burger" aria-label="Mở menu"><span></span><span></span></button>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/img/video-3.jpg">
+    <source src="assets/video/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero__shade"></div>
+  <canvas class="hero__particles" id="particles"></canvas>
+  <div class="hero__content">
+    <p class="eyebrow hero__eyebrow">Hiệp hội nghề nghiệp · Buôn Ma Thuột, Đắk Lắk</p>
+    <h1 class="hero__title">
+      <span class="line"><span class="word">Hiệp</span> <span class="word">hội</span></span>
+      <span class="line gold"><span class="word">Sầu</span> <span class="word">riêng</span></span>
+      <span class="line"><span class="word">Đắk</span> <span class="word">Lắk</span></span>
+    </h1>
+    <p class="hero__lead">Kết nối &amp; Nâng tầm Sầu riêng Đắk Lắk. Nơi cập nhật chính sách, thị trường, sự kiện ngành sầu riêng tại Đắk Lắk và cả nước.</p>
+    <div class="hero__actions">
+      <a href="#ky-luc" class="btn btn--gold magnetic">Xem hành trình kỷ lục</a>
+      <a href="https://www.facebook.com/hiephoisauriengdaklak" target="_blank" rel="noopener" class="btn btn--ghost magnetic">Fanpage 13K người theo dõi</a>
+    </div>
+  </div>
+  <div class="hero__badge">
+    <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+      <text><textPath href="#circ">KỶ LỤC GUINNESS · 16.8.2026 · ĐẮK LẮK · VIỆT NAM · </textPath></text></svg>
+    <b>525</b><small>xe bán tải</small>
+  </div>
+  <a href="#gioi-thieu" class="hero__scroll" aria-label="Cuộn xuống"><span></span></a>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Kết nối</span><i>✦</i><span>Vươn xa</span><i>✦</i><span>Đất đỏ bazan</span><i>✦</i><span>Mã vùng trồng</span><i>✦</i><span>Xuất khẩu bền vững</span><i>✦</i><span>Kỷ lục Guinness</span><i>✦</i>
+    <span>Kết nối</span><i>✦</i><span>Vươn xa</span><i>✦</i><span>Đất đỏ bazan</span><i>✦</i><span>Mã vùng trồng</span><i>✦</i><span>Xuất khẩu bền vững</span><i>✦</i><span>Kỷ lục Guinness</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section about" id="gioi-thieu">
+  <div class="container about__grid">
+    <div class="about__visual reveal-img">
+      <div class="about__logo-wrap">
+        <img src="assets/img/logo.png" alt="Logo Hiệp hội Sầu riêng tỉnh Đắk Lắk" class="about__logo">
+        <div class="orbit orbit--1"></div><div class="orbit orbit--2"></div>
+      </div>
+    </div>
+    <div class="about__text">
+      <p class="eyebrow reveal">Về chúng tôi</p>
+      <h2 class="h2 split">Mắt xích vàng trong chuỗi cung ứng sầu riêng</h2>
+      <p class="reveal">Hiệp hội Sầu riêng tỉnh Đắk Lắk ra mắt ngày <b>10/3/2023</b> tại TP. Buôn Ma Thuột. Đại hội đã bầu Ban Chấp hành khóa I (nhiệm kỳ 2023 – 2028) gồm <b>19 thành viên</b>.</p>
+      <p class="reveal">Hiệp hội tập hợp doanh nghiệp, hợp tác xã và nhà vườn, với định hướng phát triển hội viên, tiếp nhận và chuyển giao tiến bộ kỹ thuật trong sản xuất, chế biến, thương mại; tổ chức hội thảo, tập huấn kỹ thuật, tham quan học tập trong và ngoài nước; nâng cao tổ chức sản xuất và chất lượng sản phẩm.</p>
+      <blockquote class="quote reveal">
+        <p>“Đắk Lắk – mắt xích vàng trong chuỗi cung ứng sầu riêng toàn cầu. Đất đỏ bazan, khí hậu phù hợp cùng kinh nghiệm canh tác…”</p>
+        <cite>Trích bài đăng fanpage Hiệp hội, 26/8/2026</cite>
+      </blockquote>
+      <div class="about__meta reveal">
+        <div><small>Chủ tịch Hiệp hội</small><b>Ông Lê Anh Trung</b></div>
+        <div><small>Trụ sở</small><b>60 Hùng Vương, P. Buôn Ma Thuột</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="linh-vuc">
+  <div class="container">
+    <p class="eyebrow reveal center">Lĩnh vực đồng hành</p>
+    <h2 class="h2 split center">Ba trụ cột nâng tầm trái sầu riêng</h2>
+    <div class="services__grid">
+      <article class="card tilt">
+        <div class="card__icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="14" width="44" height="30" rx="4"/><path d="M24 52h16M32 44v8"/><path class="draw" d="M18 36l8-8 6 5 12-12"/><circle cx="44" cy="21" r="2.5"/></svg>
+        </div>
+        <span class="card__num">01</span>
+        <h3>Chuyển đổi số nông nghiệp</h3>
+        <p>Số hóa dữ liệu vùng trồng, nhật ký canh tác và truy xuất nguồn gốc, giúp nhà vườn và hợp tác xã quản lý minh bạch.</p>
+      </article>
+      <article class="card tilt">
+        <div class="card__icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 56s-16-14-16-28a16 16 0 0132 0c0 14-16 28-16 28z"/><circle class="draw" cx="32" cy="28" r="6"/><path d="M8 58h48"/></svg>
+        </div>
+        <span class="card__num">02</span>
+        <h3>Mã vùng trồng &amp; QC xuất khẩu</h3>
+        <p>Đồng hành cấp, duy trì mã số vùng trồng và kiểm soát chất lượng, đáp ứng yêu cầu của thị trường nhập khẩu.</p>
+      </article>
+      <article class="card tilt">
+        <div class="card__icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h34V18H6z"/><path d="M40 26h10l8 8v6H40"/><circle cx="16" cy="46" r="5"/><circle cx="48" cy="46" r="5"/><path class="draw" d="M14 30l6-6 6 6M20 24v12"/></svg>
+        </div>
+        <span class="card__num">03</span>
+        <h3>Hỗ trợ logistics quốc tế</h3>
+        <p>Kết nối doanh nghiệp, cơ sở đóng gói và đối tác vận chuyển, đưa sầu riêng Đắk Lắk vươn xa tới thị trường quốc tế.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section stats" id="so-lieu">
+  <div class="stats__bg" style="background-image:url(assets/img/doan-xe-tren-cao.jpg)"></div>
+  <div class="container">
+    <p class="eyebrow reveal center light">Sầu riêng Đắk Lắk qua những con số</p>
+    <h2 class="h2 split center light">Vùng sầu riêng hàng đầu cả nước</h2>
+    <div class="stats__grid">
+      <div class="stat"><b data-count="41000" data-sep="1">0</b><span>ha</span><p>Diện tích sầu riêng toàn tỉnh (khoảng)</p></div>
+      <div class="stat"><b data-count="500000" data-sep="1">0</b><span>tấn</span><p>Sản lượng dự kiến niên vụ 2026 (gần)</p></div>
+      <div class="stat"><b data-count="280">0</b><span>mã</span><p>Mã số vùng trồng, khoảng 7.500 ha</p></div>
+      <div class="stat"><b data-count="41">0</b><span>cơ sở</span><p>Cơ sở đóng gói được phê duyệt xuất khẩu</p></div>
+      <div class="stat"><b data-count="1.1" data-dec="1">0</b><span>tỷ USD</span><p>Sầu riêng Đắk Lắk đóng góp vào kim ngạch xuất khẩu năm 2025 (khoảng)</p></div>
+    </div>
+    <p class="source light">Nguồn: phát biểu của Chủ tịch UBND tỉnh Đỗ Hữu Huy tại lễ khai mạc Lễ hội Sầu riêng Đắk Lắk, 15/8/2026, theo <a href="https://tapchicongthuong.vn/khai-mac-le-hoi-sau-rieng-dak-lak-nam-2026-542588.htm" target="_blank" rel="noopener">Tạp chí Công Thương</a>.</p>
+  </div>
+</section>
+
+<!-- GUINNESS -->
+<section class="guinness" id="ky-luc">
+  <div class="guinness__pin">
+    <div class="guinness__intro">
+      <p class="eyebrow gold-text">Kỷ lục Guinness thế giới · 16.8.2026</p>
+      <h2 class="guinness__title">
+        <span class="big" data-count="525">525</span>
+        <span class="small">xe bán tải<br>chở sầu riêng</span>
+      </h2>
+      <p class="guinness__lead">“Đoàn xe bán tải chở sầu riêng dài nhất thế giới”, Largest parade of fruit-carrying vehicles. Đoàn xe xuất phát từ Quảng trường Tân An, qua Trần Phú, Lê Duẩn, Quốc lộ 26 và về đích trên đường Võ Nguyên Giáp.</p>
+      <p class="guinness__hint">Cuộn để xem hành trình <span>→</span></p>
+    </div>
+    <div class="guinness__track" id="gTrack">
+      <figure class="gcard"><img src="assets/img/video-3.jpg" alt="Sầu riêng chất đầy thùng xe bán tải" loading="lazy"><figcaption>Từng thùng xe chở đầy sầu riêng Đắk Lắk</figcaption></figure>
+      <figure class="gcard tall"><img src="assets/img/525-xe.jpg" alt="525 xe một dấu ấn đặc biệt, chứng nhận Guinness" loading="lazy"><figcaption>525 xe · một dấu ấn đặc biệt</figcaption></figure>
+      <figure class="gcard"><img src="assets/img/dak-lak-tu-tren-cao.jpg" alt="Đoàn xe xếp chữ ĐẮK LẮK nhìn từ trên cao" loading="lazy"><figcaption>Đoàn xe xếp chữ “ĐẮK LẮK”</figcaption></figure>
+      <figure class="gcard"><img src="assets/img/doan-xe-tren-cao.jpg" alt="Đoàn xe bán tải trên đại lộ nhìn từ flycam" loading="lazy"><figcaption>Đoàn xe trải dài trên đại lộ</figcaption></figure>
+      <figure class="gcard"><img src="assets/img/xe-voi-ford.jpg" alt="Xe bán tải mang biểu tượng voi và trái sầu riêng" loading="lazy"><figcaption>Biểu tượng voi ôm trái sầu riêng dẫn đầu đoàn</figcaption></figure>
+      <figure class="gcard"><img src="assets/img/video-70.jpg" alt="Lễ công bố xác lập kỷ lục Guinness" loading="lazy"><figcaption>Khoảnh khắc nhận chứng nhận Guinness</figcaption></figure>
+      <figure class="gcard"><img src="assets/img/doan-xe-raptor.jpg" alt="Đại sứ lễ hội bên xe bán tải" loading="lazy"><figcaption>Đại sứ lễ hội đồng hành cùng đoàn xe</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section recap">
+  <div class="container recap__grid">
+    <div class="recap__text">
+      <p class="eyebrow reveal">Recap video</p>
+      <h2 class="h2 split">Nhìn lại hành trình làm nên kỷ lục</h2>
+      <p class="reveal">Một kỷ lục Guinness được xác lập không chỉ bằng những con số ấn tượng, mà còn được tạo nên từ tinh thần đoàn kết của nhà vườn, doanh nghiệp, lực lượng chức năng và hàng trăm tình nguyện viên.</p>
+      <p class="reveal small-note">Video từ fanpage Hiệp hội Sầu riêng Đắk Lắk.</p>
+    </div>
+    <div class="recap__video reveal-img">
+      <video controls preload="metadata" poster="assets/img/video-25.jpg" playsinline>
+        <source src="assets/video/recap-guinness.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- FESTIVAL -->
+<section class="section festival" id="le-hoi">
+  <div class="container">
+    <p class="eyebrow reveal center">15/8 – 2/9/2026</p>
+    <h2 class="h2 split center">Lễ hội Sầu riêng Đắk Lắk 2026</h2>
+    <p class="festival__theme reveal center">Chủ đề “Sầu riêng Đắk Lắk – Kết nối, vươn xa”. Lần đầu tiên tỉnh Đắk Lắk tổ chức Lễ hội Sầu riêng quy mô cấp tỉnh, diễn ra tại phường Buôn Ma Thuột, xã Krông Pắc, phường Tuy Hòa và các vùng trồng sầu riêng.</p>
+
+    <div class="bento">
+      <div class="bento__item b-big"><img src="assets/img/video-25.jpg" alt="" loading="lazy"><div><b data-count="3">0</b><span>kỷ lục được xác lập</span><p>1 kỷ lục Guinness thế giới và 2 kỷ lục Việt Nam</p></div></div>
+      <div class="bento__item"><b data-count="750000" data-sep="1">0</b><span>lượt khách</span><p>Trong đó khoảng 16.000 lượt khách quốc tế</p></div>
+      <div class="bento__item gold"><b data-count="102">0</b><span>món ăn</span><p>Kỷ lục Việt Nam: chế biến và công diễn nhiều món ăn từ sầu riêng nhất</p></div>
+      <div class="bento__item"><b data-count="1295" data-sep="1">0</b><span>tỷ đồng</span><p>Doanh thu du lịch trong thời gian lễ hội (trên)</p></div>
+      <div class="bento__item green"><b>16×18</b><span>mét</span><p>Kỷ lục Việt Nam: mô hình “Chiếc gùi sầu riêng lớn nhất Việt Nam”</p></div>
+      <div class="bento__item"><b data-count="9">0</b><span>biên bản hợp tác</span><p>Tổng giá trị gần 9.000 tỷ đồng</p></div>
+      <div class="bento__item gold"><b data-count="23.8" data-dec="1">0</b><span>tỷ đồng</span><p>Phiên đấu giá sầu riêng tại vườn đầu tiên ở xã Krông Pắc: 14,36 ha VietGAP, giá trúng 68.000 đ/kg</p></div>
+      <div class="bento__item"><b data-count="600">0</b><span>tấn sầu riêng</span><p>Tiêu thụ trong thời gian lễ hội, khoảng 44 tỷ đồng</p></div>
+    </div>
+    <p class="source">Nguồn: <a href="https://tapchicongthuong.vn/le-hoi-sau-rieng-dak-lak-2026-tao-suc-lan-toa--mo-rong-ket-noi-thi-truong-546882.htm" target="_blank" rel="noopener">Tạp chí Công Thương, 3/9/2026</a>; <a href="https://daibieunhandan.vn/dak-lak-buoc-dot-pha-trong-tieu-thu-sau-rieng-voi-phien-dau-gia-23-8-ty-dong-10424935.html" target="_blank" rel="noopener">Báo Đại biểu Nhân dân, 26/7/2026</a>.</p>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section timeline" id="hanh-trinh">
+  <div class="container">
+    <p class="eyebrow reveal center">Hành trình</p>
+    <h2 class="h2 split center">Những dấu mốc đáng nhớ</h2>
+    <div class="tl">
+      <div class="tl__line"><span id="tlFill"></span></div>
+      <div class="tl__item">
+        <div class="tl__date">10/3/2023</div>
+        <div class="tl__body"><h3>Ra mắt Hiệp hội</h3><p>Lễ ra mắt Hiệp hội Sầu riêng tỉnh Đắk Lắk tại TP. Buôn Ma Thuột với khoảng 160 đại biểu là doanh nghiệp, hợp tác xã và nhà vườn; bầu Ban Chấp hành khóa I gồm 19 thành viên.</p></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">Tháng 7/2026</div>
+        <div class="tl__body"><h3>Phiên đấu giá sầu riêng tại vườn</h3><p>Phiên đấu giá tại vườn đầu tiên ở xã Krông Pắc: 10 vườn Dona, 14,36 ha đạt VietGAP, tổng giá trị khoảng 23,8 tỷ đồng. Hiệp hội có mặt cùng lãnh đạo tỉnh và các sở ngành.</p></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">15/8/2026</div>
+        <div class="tl__body"><h3>Khai mạc Lễ hội Sầu riêng Đắk Lắk</h3><p>Đêm khai mạc tại Quảng trường 10/3, phường Buôn Ma Thuột. Cùng đêm công bố kỷ lục “Chiếc gùi sầu riêng lớn nhất Việt Nam”.</p></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">16/8/2026</div>
+        <div class="tl__body"><h3>Xác lập kỷ lục Guinness</h3><p>525 xe bán tải chở sầu riêng xác lập kỷ lục “Đoàn xe bán tải chở sầu riêng dài nhất thế giới”. Hiệp hội gửi thư tri ân lực lượng CSGT và các đơn vị tình nguyện.</p><img src="assets/img/dak-lak-tu-tren-cao.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">19/8/2026</div>
+        <div class="tl__body"><h3>Gặp gỡ, giao thương Việt Nam – Trung Quốc</h3><p>Chương trình gặp gỡ, giao thương, kết nối hợp tác chuỗi cung ứng sầu riêng Việt Nam – Trung Quốc, tỉnh Đắk Lắk 2026 tại Elephants Hotel, Buôn Ma Thuột. Định hướng chuyển từ bán quả sang xây dựng chuỗi giá trị.</p><img src="assets/img/giao-thuong-vn-tq-1.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">Tháng 8/2026</div>
+        <div class="tl__body"><h3>Tọa đàm “Gỡ điểm nghẽn ngành hàng sầu riêng”</h3><p>Tọa đàm “Gỡ điểm nghẽn ngành hàng sầu riêng – Kiến tạo xuất khẩu bền vững” do Báo Tiền Phong tổ chức tại Đắk Lắk, với sự tham gia của cơ quan hải quan, kiểm dịch và Hiệp hội.</p><img src="assets/img/toa-dam-tien-phong.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">Tháng 8/2026</div>
+        <div class="tl__body"><h3>Trao giấy chứng nhận cho học sinh thực tập</h3><p>Trao giấy chứng nhận cho học sinh Trường Cao đẳng Buôn Ma Thuột hoàn thành xuất sắc kỳ thực tập tại chương trình “Đoàn xe bán tải chở sầu riêng dài nhất thế giới”.</p><img src="assets/img/trao-giay-4.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="tl__item">
+        <div class="tl__date">2/9/2026</div>
+        <div class="tl__body"><h3>Khép lại mùa lễ hội</h3><p>Lễ hội khép lại với 3 kỷ lục, khoảng 750.000 lượt khách và 9 biên bản hợp tác. Ngày 4/9, Ban Tổ chức gửi lời cảm ơn tới các nhà tài trợ, đơn vị đồng hành.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section gallery" id="hinh-anh">
+  <div class="container">
+    <p class="eyebrow reveal center">Khoảnh khắc</p>
+    <h2 class="h2 split center">Những con người làm nên mùa lễ hội</h2>
+    <div class="masonry" id="masonry">
+      <a href="assets/img/polytechnic-sau-rieng.jpg" class="m-item"><img src="assets/img/polytechnic-sau-rieng.jpg" alt="Sinh viên chuẩn bị sầu riêng tại lễ hội" loading="lazy"></a>
+      <a href="assets/img/tnv-hau-can.jpg" class="m-item"><img src="assets/img/tnv-hau-can.jpg" alt="Tình nguyện viên chuẩn bị hậu cần" loading="lazy"></a>
+      <a href="assets/img/giao-thuong-vn-tq-2.jpg" class="m-item"><img src="assets/img/giao-thuong-vn-tq-2.jpg" alt="Đại diện doanh nghiệp Trung Quốc phát biểu" loading="lazy"></a>
+      <a href="assets/img/doan-xe-dtv.jpg" class="m-item"><img src="assets/img/doan-xe-dtv.jpg" alt="Phỏng vấn trên đường đoàn xe" loading="lazy"></a>
+      <a href="assets/img/tnv-doan-2.jpg" class="m-item"><img src="assets/img/tnv-doan-2.jpg" alt="Đoàn tình nguyện viên" loading="lazy"></a>
+      <a href="assets/img/polytechnic-do-dac.jpg" class="m-item"><img src="assets/img/polytechnic-do-dac.jpg" alt="Sinh viên đo đạc đường đi đoàn xe" loading="lazy"></a>
+      <a href="assets/img/giao-thuong-vn-tq-4.jpg" class="m-item"><img src="assets/img/giao-thuong-vn-tq-4.jpg" alt="Hội trường chương trình giao thương" loading="lazy"></a>
+      <a href="assets/img/tnv-chuan-bi.jpg" class="m-item"><img src="assets/img/tnv-chuan-bi.jpg" alt="Tình nguyện viên chuẩn bị" loading="lazy"></a>
+      <a href="assets/img/toa-dam-3.jpg" class="m-item"><img src="assets/img/toa-dam-3.jpg" alt="Phát biểu tại tọa đàm" loading="lazy"></a>
+      <a href="assets/img/polytechnic-doan.jpg" class="m-item"><img src="assets/img/polytechnic-doan.jpg" alt="Đoàn sinh viên tham gia" loading="lazy"></a>
+      <a href="assets/img/doan-xe-phong-van.jpg" class="m-item"><img src="assets/img/doan-xe-phong-van.jpg" alt="Đại sứ lễ hội trả lời phỏng vấn" loading="lazy"></a>
+      <a href="assets/img/tnv-dieu-tiet.jpg" class="m-item"><img src="assets/img/tnv-dieu-tiet.jpg" alt="Tình nguyện viên và CSGT điều tiết giao thông" loading="lazy"></a>
+      <a href="assets/img/giao-thuong-vn-tq-3.jpg" class="m-item"><img src="assets/img/giao-thuong-vn-tq-3.jpg" alt="Trình bày chuỗi lạnh" loading="lazy"></a>
+      <a href="assets/img/trao-giay-1.jpg" class="m-item"><img src="assets/img/trao-giay-1.jpg" alt="Trao giấy chứng nhận" loading="lazy"></a>
+      <a href="assets/img/giao-thuong-vn-tq-5.jpg" class="m-item"><img src="assets/img/giao-thuong-vn-tq-5.jpg" alt="Đại biểu dự chương trình" loading="lazy"></a>
+      <a href="assets/img/toa-dam-4.jpg" class="m-item"><img src="assets/img/toa-dam-4.jpg" alt="Đại biểu dự tọa đàm" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- THANKS -->
+<section class="section thanks" id="tri-an">
+  <div class="container">
+    <p class="eyebrow reveal center">Tri ân</p>
+    <h2 class="h2 split center">Cảm ơn những người đồng hành</h2>
+    <p class="center reveal thanks__lead">Hiệp hội gửi thư cảm ơn tới lực lượng Cảnh sát giao thông Công an tỉnh Đắk Lắk, tình nguyện viên các trường cùng các nhà tài trợ, đồng tài trợ đã góp phần làm nên thành công của Lễ hội.</p>
+    <div class="letters">
+      <a href="assets/img/thu-cam-on-csgt.jpg" class="letter" style="--r:-6deg"><img src="assets/img/thu-cam-on-csgt.jpg" alt="Thư cảm ơn lực lượng CSGT Công an tỉnh Đắk Lắk" loading="lazy"></a>
+      <a href="assets/img/nha-tai-tro.jpg" class="letter" style="--r:0deg"><img src="assets/img/nha-tai-tro.jpg" alt="Nhà tài trợ Lễ hội Sầu riêng Đắk Lắk 2026" loading="lazy"></a>
+      <a href="assets/img/thu-cam-on-cd-cong-thuong.jpg" class="letter" style="--r:5deg"><img src="assets/img/thu-cam-on-cd-cong-thuong.jpg" alt="Thư cảm ơn tình nguyện viên Trường CĐ Công thương cơ sở Đắk Lắk" loading="lazy"></a>
+      <a href="assets/img/thu-cam-on-dh-dong-a.jpg" class="letter" style="--r:-3deg"><img src="assets/img/thu-cam-on-dh-dong-a.jpg" alt="Thư cảm ơn tình nguyện viên Trường ĐH Đông Á phân hiệu Đắk Lắk" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="section press" id="bao-chi">
+  <div class="container">
+    <p class="eyebrow reveal center">Báo chí nói về chúng tôi</p>
+    <h2 class="h2 split center">Sầu riêng Đắk Lắk trên mặt báo</h2>
+    <div class="press__grid">
+      <a class="pcard" href="https://tienphong.vn/doan-xe-cho-sau-rieng-doc-nhat-vo-nhi-tai-dak-lak-post1868357.tpo" target="_blank" rel="noopener"><span class="pcard__src">Báo Tiền Phong · 16/8/2026</span><h3>Đoàn xe chở sầu riêng “độc nhất vô nhị” tại Đắk Lắk</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://tapchicongthuong.vn/khai-mac-le-hoi-sau-rieng-dak-lak-nam-2026-542588.htm" target="_blank" rel="noopener"><span class="pcard__src">Tạp chí Công Thương · 16/8/2026</span><h3>Khai mạc Lễ hội Sầu riêng Đắk Lắk năm 2026</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://lsvn.vn/dak-lak-nang-tam-sau-rieng-chuyen-tu-ban-qua-sang-xay-dung-chuoi-gia-tri-cung-doanh-nghiep-trung-quoc-a177842.html" target="_blank" rel="noopener"><span class="pcard__src">Luật sư Việt Nam · 20/8/2026</span><h3>Đắk Lắk nâng tầm sầu riêng: chuyển từ bán quả sang xây dựng chuỗi giá trị cùng doanh nghiệp Trung Quốc</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://tapchicongthuong.vn/le-hoi-sau-rieng-dak-lak-2026-tao-suc-lan-toa--mo-rong-ket-noi-thi-truong-546882.htm" target="_blank" rel="noopener"><span class="pcard__src">Tạp chí Công Thương · 3/9/2026</span><h3>Lễ hội Sầu riêng Đắk Lắk 2026 tạo sức lan tỏa, mở rộng kết nối thị trường</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://daibieunhandan.vn/dak-lak-buoc-dot-pha-trong-tieu-thu-sau-rieng-voi-phien-dau-gia-23-8-ty-dong-10424935.html" target="_blank" rel="noopener"><span class="pcard__src">Báo Đại biểu Nhân dân · 26/7/2026</span><h3>Đắk Lắk: Bước đột phá trong tiêu thụ sầu riêng với phiên đấu giá 23,8 tỷ đồng</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://daibieunhandan.vn/ra-mat-hiep-hoi-sau-rieng-tinh-dak-lak-10304412.html" target="_blank" rel="noopener"><span class="pcard__src">Báo Đại biểu Nhân dân · 10/3/2023</span><h3>Ra mắt Hiệp hội Sầu riêng tỉnh Đắk Lắk</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://nhandan.vn/dak-lak-phat-trien-ben-vung-nganh-hang-sau-rieng-post805258.html" target="_blank" rel="noopener"><span class="pcard__src">Báo Nhân Dân · 18/4/2024</span><h3>Đắk Lắk phát triển bền vững ngành hàng sầu riêng</h3><i>Đọc bài →</i></a>
+      <a class="pcard" href="https://www.facebook.com/share/v/19J2FHHi5D/" target="_blank" rel="noopener"><span class="pcard__src">Báo Nông nghiệp và Môi trường · 22/9/2026</span><h3>Giám đốc HTX sầu riêng nói tiếng Anh “như gió” ở Đắk Lắk</h3><i>Xem video →</i></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="lien-he">
+  <div class="contact__glow"></div>
+  <div class="container contact__grid">
+    <div>
+      <p class="eyebrow reveal light">Liên hệ</p>
+      <h2 class="h2 split light">Cùng kết nối, cùng vươn xa</h2>
+      <p class="reveal light-p">Nhà vườn, hợp tác xã, doanh nghiệp và đối tác quan tâm tới ngành sầu riêng Đắk Lắk, hãy liên hệ với Hiệp hội.</p>
+      <div class="socials reveal">
+        <a href="https://www.facebook.com/hiephoisauriengdaklak" target="_blank" rel="noopener" class="magnetic" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg></a>
+        <a href="https://www.youtube.com/@hiephoisauriengdaklak" target="_blank" rel="noopener" class="magnetic" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 00-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 001 7.5 31 31 0 00.6 12 31 31 0 001 16.5a3 3 0 002.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 002.1-2.1c.3-1.5.4-3 .4-4.5s-.1-3-.4-4.5zM9.7 15.1V8.9L15.5 12l-5.8 3.1z"/></svg></a>
+        <a href="https://www.tiktok.com/@hiephoisauriengdaklak" target="_blank" rel="noopener" class="magnetic" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.8A4.3 4.3 0 0115.5 3h-3.1v12.4a2.6 2.6 0 11-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 105 5.7V9.1a7.3 7.3 0 004.3 1.4V7.4a4.3 4.3 0 01-3.3-1.6z"/></svg></a>
+      </div>
+    </div>
+    <div class="contact__cards">
+      <div class="ccard reveal"><small>Trụ sở</small><b>60 Hùng Vương, phường Buôn Ma Thuột, tỉnh Đắk Lắk</b></div>
+      <div class="ccard reveal"><small>Văn phòng</small><b>B12 Nguyễn Nhạc, phường Tân An, tỉnh Đắk Lắk</b></div>
+      <a class="ccard reveal" href="tel:0941888239"><small>Điện thoại</small><b>094 188 82 39</b></a>
+      <a class="ccard reveal" href="mailto:f9jsc.vn@gmail.com"><small>Email</small><b>f9jsc.vn@gmail.com</b></a>
+      <a class="ccard reveal" href="https://hiephoisauriengdaklak.com" target="_blank" rel="noopener"><small>Website</small><b>hiephoisauriengdaklak.com</b></a>
+    </div>
+  </div>
+  <div class="contact__map reveal">
+    <iframe title="Bản đồ 60 Hùng Vương, Buôn Ma Thuột" loading="lazy" src="https://www.google.com/maps?q=60+H%C3%B9ng+V%C6%B0%C6%A1ng,+Bu%C3%B4n+Ma+Thu%E1%BB%99t,+%C4%90%E1%BA%AFk+L%E1%BA%AFk&output=embed"></iframe>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__big" aria-hidden="true">SẦU RIÊNG ĐẮK LẮK</div>
+  <div class="container footer__row">
+    <span>© 2026 Hiệp hội Sầu riêng tỉnh Đắk Lắk</span>
+    <span>Hình ảnh, video từ fanpage Hiệp hội · Số liệu theo các báo đã dẫn nguồn</span>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true"><button aria-label="Đóng">×</button><img alt=""></div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
