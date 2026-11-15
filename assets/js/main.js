@@ -258,3 +258,50 @@
 
   addEventListener('load', () => ScrollTrigger.refresh());
 })();
+
+/* ===== Tabs filter, news modal, hub (runs with or without GSAP) ===== */
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const hasG = typeof window.gsap !== 'undefined';
+  const setupTabs = (tabsSel, itemSel) => {
+    const tabs = $(tabsSel); if (!tabs) return;
+    const pill = $('.tabs__pill', tabs);
+    const movePill = btn => { if (!pill) return; pill.style.width = btn.offsetWidth + 'px'; pill.style.transform = `translateX(${btn.offsetLeft - 6}px)`; };
+    const btns = $$('button', tabs);
+    movePill(btns[0]); addEventListener('resize', () => movePill($('button.on', tabs)));
+    btns.forEach(b => b.addEventListener('click', () => {
+      btns.forEach(x => x.classList.remove('on')); b.classList.add('on'); movePill(b);
+      const f = b.dataset.f, items = $$(itemSel);
+      items.forEach(it => it.classList.toggle('hide', !(f === 'all' || it.dataset.cat === f)));
+      const shown = items.filter(it => !it.classList.contains('hide'));
+      if (hasG) gsap.fromTo(shown, { y: 30, autoAlpha: 0, scale: .96 }, { y: 0, autoAlpha: 1, scale: 1, duration: .6, stagger: .04, ease: 'power3.out', overwrite: true });
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    }));
+  };
+  setupTabs('#newsTabs', '#newsGrid .ncard');
+  setupTabs('#galTabs', '#masonry .m-item');
+
+  /* news modal */
+  const modal = $('#nmodal'); if (modal) {
+    const content = $('.nmodal__content', modal);
+    const close = () => { modal.classList.remove('open'); document.body.classList.remove('modal-open'); };
+    $$('.ncard').forEach(c => {
+      const full = $('.ncard__full', c), btn = $('button.ncard__more', c);
+      if (full && btn) btn.addEventListener('click', () => { content.innerHTML = full.innerHTML; modal.classList.add('open'); document.body.classList.add('modal-open'); });
+    });
+    $('.nmodal__x', modal).addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  if (!hasG || !window.ScrollTrigger || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* hub: center pops, spokes draw, nodes fly out */
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '#hub', start: 'top 75%' } });
+  tl.from('.hub__center', { scale: 0, rotate: -120, duration: 1, ease: 'back.out(1.7)' })
+    .from('.hub__node', { left: '50%', top: '50%', scale: 0, autoAlpha: 0, duration: 1, stagger: .1, ease: 'expo.out' }, '-=.4')
+    .from('.hub__ring', { scale: .3, autoAlpha: 0, duration: 1.2, stagger: .15, ease: 'expo.out', transformOrigin: '50% 50%' }, '-=1');
+  gsap.from('.fcard', { y: 70, autoAlpha: 0, rotateX: -20, duration: 1, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.func__grid', start: 'top 85%' } });
+  gsap.from('.medal', { y: 60, autoAlpha: 0, scale: .8, duration: 1, stagger: .1, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.medals', start: 'top 85%' } });
+  gsap.from('.ncard', { y: 60, autoAlpha: 0, duration: .9, stagger: .06, ease: 'power3.out', scrollTrigger: { trigger: '#newsGrid', start: 'top 85%' } });
+})();
