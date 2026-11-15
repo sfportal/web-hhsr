@@ -43,7 +43,8 @@
     <a href="#thanh-tuu">Thành tựu</a>
     <a href="#tin-tuc">Tin tức</a>
     <a href="#hinh-anh">Hình ảnh</a>
-    <a href="#lien-he" class="nav__cta">Liên hệ</a>
+    <a href="#lien-he">Liên hệ</a>
+    <a href="#hoi-vien" class="nav__cta">Đăng ký hội viên</a>
   </nav>
   <button class="nav__burger" id="burger" aria-label="Mở menu"><span></span><span></span></button>
 </header>
@@ -450,6 +451,102 @@
   </div>
 </section>
 
+<!-- MEMBERSHIP -->
+<section class="section hv" id="hoi-vien">
+  <div class="container hv__grid">
+    <div class="hv__intro">
+      <p class="eyebrow reveal">Hội viên</p>
+      <h2 class="h2 split">Trở thành hội viên Hiệp hội</h2>
+      <p class="reveal hv__lead">Nhà vườn, hợp tác xã, tổ hợp tác, doanh nghiệp, nhà khoa học và chuyên gia gắn bó với cây sầu riêng Đắk Lắk có thể đăng ký tham gia Hiệp hội trực tuyến.</p>
+      <ul class="hv__benefits">
+        <li class="reveal"><i>🎓</i><div><b>Tập huấn, hội thảo</b><span>Tham gia các lớp chuyển giao kỹ thuật, tham quan mô hình.</span></div></li>
+        <li class="reveal"><i>📣</i><div><b>Thông tin ngành hàng</b><span>Nhận thông tin kỹ thuật, tiêu chuẩn thị trường và hoạt động của Hiệp hội.</span></div></li>
+        <li class="reveal"><i>🗺️</i><div><b>Hỗ trợ vùng trồng</b><span>Được hướng dẫn hồ sơ mã số vùng trồng và truy xuất nguồn gốc.</span></div></li>
+        <li class="reveal"><i>🤝</i><div><b>Kết nối liên kết</b><span>Kết nối với hội viên, doanh nghiệp và các chương trình của ngành.</span></div></li>
+      </ul>
+      <ol class="hv__steps reveal">
+        <li><span>1</span>Đăng ký trực tuyến</li>
+        <li><span>2</span>Hiệp hội xác nhận</li>
+        <li><span>3</span>Đóng hội phí</li>
+      </ol>
+    </div>
+
+    <div class="hvcard reveal" id="hvcard">
+      <div class="hvcard__tabs" role="tablist">
+        <button class="on" data-t="dk" role="tab">Đăng ký hội viên</button>
+        <button data-t="phi" role="tab">Đóng hội phí</button>
+        <span class="hvcard__pill"></span>
+      </div>
+
+      <!-- REGISTER -->
+      <form class="hvform" id="hvReg" data-p="dk" novalidate>
+        <fieldset class="hvform__type">
+          <legend>Bạn đăng ký với tư cách</legend>
+          <label><input type="radio" name="loai" value="ca_nhan" checked><span>🌱 Nhà vườn, cá nhân</span></label>
+          <label><input type="radio" name="loai" value="htx"><span>🏡 HTX, tổ hợp tác</span></label>
+          <label><input type="radio" name="loai" value="doanh_nghiep"><span>🏭 Doanh nghiệp</span></label>
+          <label><input type="radio" name="loai" value="chuyen_gia"><span>🔬 Nhà khoa học, chuyên gia</span></label>
+        </fieldset>
+        <div class="hvform__row">
+          <label class="f"><span data-lbl-ten>Họ và tên *</span><input name="ho_ten" required maxlength="120" autocomplete="name"></label>
+          <label class="f org-only"><span>Người đại diện *</span><input name="nguoi_dai_dien" maxlength="120"></label>
+        </div>
+        <div class="hvform__row">
+          <label class="f"><span>Số điện thoại *</span><input name="dien_thoai" required inputmode="tel" pattern="0[0-9]{9}" maxlength="10" autocomplete="tel" placeholder="09xxxxxxxx"></label>
+          <label class="f"><span>Email</span><input name="email" type="email" maxlength="120" autocomplete="email"></label>
+        </div>
+        <div class="hvform__row">
+          <label class="f"><span>Xã, phường *</span><input name="xa_phuong" required maxlength="120" placeholder="VD: xã Krông Pắc"></label>
+          <label class="f"><span>Diện tích sầu riêng (ha)</span><input name="dien_tich_ha" type="number" min="0" step="0.1" inputmode="decimal"></label>
+        </div>
+        <fieldset class="hvform__needs">
+          <legend>Bạn quan tâm</legend>
+          <label><input type="checkbox" name="nhu_cau" value="tap_huan"><span>Tập huấn kỹ thuật</span></label>
+          <label><input type="checkbox" name="nhu_cau" value="ma_vung_trong"><span>Mã số vùng trồng</span></label>
+          <label><input type="checkbox" name="nhu_cau" value="truy_xuat"><span>Truy xuất nguồn gốc</span></label>
+          <label><input type="checkbox" name="nhu_cau" value="lien_ket"><span>Liên kết tiêu thụ</span></label>
+        </fieldset>
+        <label class="hvform__consent"><input type="checkbox" name="dong_y" required><span>Tôi đồng ý để Hiệp hội lưu và sử dụng thông tin trên cho việc xét kết nạp và liên hệ hội viên. Thông tin không được công khai.</span></label>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="hvform__msg" role="status"></p>
+        <button class="btn btn--gold hvform__go" type="submit">Gửi đăng ký <span>→</span></button>
+      </form>
+
+      <div class="hvdone" id="hvDone" hidden>
+        <div class="hvdone__ic">✓</div>
+        <h3>Đã gửi đăng ký</h3>
+        <p>Mã hồ sơ của bạn là</p>
+        <div class="hvdone__code" id="hvCode">HV-000000</div>
+        <p class="hvdone__note">Hiệp hội sẽ liên hệ qua số điện thoại bạn cung cấp để xác nhận. Hãy lưu lại mã này để đóng hội phí.</p>
+        <button class="btn btn--gold" type="button" id="hvToPay">Đóng hội phí ngay →</button>
+      </div>
+
+      <!-- PAY -->
+      <form class="hvform" id="hvPay" data-p="phi" hidden novalidate>
+        <div class="hvform__row">
+          <label class="f"><span>Mã hồ sơ hoặc số điện thoại *</span><input name="ma_ho_so" required maxlength="20" placeholder="HV-123456"></label>
+          <label class="f"><span>Năm hội phí *</span><select name="nam" id="hvYear"></select></label>
+        </div>
+        <label class="f" id="hvFeeWrap"><span>Mức hội phí *</span><select name="muc_phi" id="hvFee"></select></label>
+        <div class="hvqr" id="hvQr">
+          <div class="hvqr__img"><img id="hvQrImg" alt="Mã QR chuyển khoản hội phí" hidden><div class="hvqr__ph" id="hvQrPh">Nhập mã hồ sơ để tạo mã QR</div></div>
+          <div class="hvqr__info">
+            <p><small>Ngân hàng</small><b id="hvBank">…</b></p>
+            <p><small>Số tài khoản</small><b id="hvAcc">…</b></p>
+            <p><small>Chủ tài khoản</small><b id="hvName">…</b></p>
+            <p><small>Số tiền</small><b id="hvAmt">…</b></p>
+            <p><small>Nội dung chuyển khoản</small><b id="hvMemo">…</b> <button type="button" class="hvqr__copy" id="hvCopy">Sao chép</button></p>
+          </div>
+        </div>
+        <p class="hvform__hint">Quét mã bằng ứng dụng ngân hàng bất kỳ. Giữ nguyên nội dung chuyển khoản để Hiệp hội đối soát. Biên nhận hội phí sẽ được gửi sau khi Hiệp hội xác nhận.</p>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="hvform__msg" role="status"></p>
+        <button class="btn btn--gold hvform__go" type="submit">Tôi đã chuyển khoản <span>→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="section contact" id="lien-he">
   <div class="contact__glow"></div>
@@ -494,5 +591,7 @@
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/vendor/lenis.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/hoivien.js"></script>
 </body>
 </html>

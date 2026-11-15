@@ -1,0 +1,13 @@
+name = "hhsr-hoivien"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://sfportal.github.io,http://localhost:8765"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hhsr-hoivien"
+database_id = "a84398b6-0725-4f3e-8411-c51227532ee2"
+migrations_dir = "migrations"
