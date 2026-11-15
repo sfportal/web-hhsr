@@ -366,14 +366,14 @@
 <!-- NEWS MODAL -->
 <div class="nmodal" id="nmodal" aria-hidden="true"><div class="nmodal__box"><button class="nmodal__x" aria-label="Đóng">×</button><div class="nmodal__content"></div></div></div>
 
-<!-- FARMBASE / TRACEABILITY -->
+<!-- TRACEABILITY -->
 <section class="fb" id="truy-xuat">
   <div class="fb__grid-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="fb__head">
       <p class="eyebrow reveal fb-eyebrow">Truy xuất nguồn gốc</p>
       <h2 class="h2 split light">Hỗ trợ hội viên số hóa vùng trồng</h2>
-      <p class="fb__lead reveal">Bên cạnh các hoạt động liên kết ngành hàng, Hiệp hội phối hợp triển khai truy xuất nguồn gốc trên nền tảng FarmBase (trước đây là DurianBase), hỗ trợ bà con chuẩn bị hồ sơ mã số vùng trồng và đồng bộ dữ liệu với hệ thống truy xuất nguồn gốc nông sản của Bộ Nông nghiệp và Môi trường.</p>
+      <p class="fb__lead reveal">Bên cạnh các hoạt động liên kết ngành hàng, Hiệp hội triển khai truy xuất nguồn gốc liên kết với hệ thống truy xuất nguồn gốc nông sản của Bộ Nông nghiệp và Môi trường, hỗ trợ bà con chuẩn bị hồ sơ mã số vùng trồng và đồng bộ dữ liệu vùng trồng.</p>
     </div>
 
     <!-- data flow -->
@@ -386,8 +386,8 @@
         <circle r="6" class="flow__dot"><animateMotion dur="2.4s" begin=".8s" repeatCount="indefinite"><mpath href="#fp2"/></animateMotion></circle>
         <circle r="6" class="flow__dot"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#fp3"/></animateMotion></circle>
       </svg>
-      <div class="flow__node"><div class="flow__ic">🌱</div><h4>Nhà vườn</h4><p>Ghi nhật ký ngay trên Zalo Mini App, chụp ảnh bao bì phân thuốc.</p></div>
-      <div class="flow__node"><div class="flow__ic">🗂️</div><h4>HTX · Doanh nghiệp</h4><p>Quản lý vùng, lô, nhật ký, thu hoạch trên trang quản lý FarmBase.</p></div>
+      <div class="flow__node"><div class="flow__ic">🌱</div><h4>Nhà vườn</h4><p>Ghi nhật ký ngay trên điện thoại, chụp ảnh bao bì phân thuốc.</p></div>
+      <div class="flow__node"><div class="flow__ic">🗂️</div><h4>HTX · Doanh nghiệp</h4><p>Quản lý vùng, lô, nhật ký, thu hoạch trên hệ thống quản lý.</p></div>
       <div class="flow__node hl"><div class="flow__ic">🏛️</div><h4>Bộ NN&amp;MT</h4><p>Đồng bộ dữ liệu với hệ thống truy xuất nguồn gốc nông sản quốc gia.</p></div>
       <div class="flow__node"><div class="flow__ic">📱</div><h4>Thị trường</h4><p>Quét QR vùng trồng, QR từng lô để xem hành trình của trái sầu riêng.</p></div>
     </div>
@@ -395,9 +395,9 @@
     <!-- app mockup -->
     <div class="mock">
       <div class="mock__browser tiltSoft">
-        <div class="mock__bar"><span></span><span></span><span></span><em>Trang quản lý FarmBase · mô phỏng</em></div>
+        <div class="mock__bar"><span></span><span></span><span></span><em>Trang quản lý vùng trồng · mô phỏng</em></div>
         <div class="dash">
-          <aside class="dash__side"><b>farmbase</b><i class="on">Vùng trồng</i><i>Lô đất</i><i>Nhật ký</i><i>Thu hoạch</i><i>Bản đồ</i><i>Mã QR</i></aside>
+          <aside class="dash__side"><b>Vùng trồng</b><i class="on">Vùng trồng</i><i>Lô đất</i><i>Nhật ký</i><i>Thu hoạch</i><i>Bản đồ</i><i>Mã QR</i></aside>
           <div class="dash__main">
             <div class="dash__top"><div><small>Vùng trồng mẫu</small><h5>Vùng sầu riêng Mẫu 01</h5></div><span class="dash__badge">Vụ mùa 2026</span></div>
             <div class="dash__kpis"><div><b>5</b><small>lô</small></div><div><b>6,8</b><small>ha</small></div><div><b>42</b><small>nhật ký</small></div><div><b class="ok">100%</b><small>đã đồng bộ</small></div></div>
@@ -408,7 +408,7 @@
       <div class="phone">
         <div class="phone__notch"></div>
         <div class="phone__screen">
-          <div class="ph__head"><span>‹</span><b>FarmBase</b><em>Zalo Mini App</em></div>
+          <div class="ph__head"><span>‹</span><b>Nhật ký vườn</b><em>Ứng dụng nông hộ</em></div>
           <div class="ph__hello">Chào bà con 👋</div>
           <div class="ph__card"><div><b>Lô A2 · Dona</b><small>1,4 ha · 140 cây · trồng 2019</small></div><span class="ph__qr" aria-hidden="true"></span></div>
           <div class="ph__title">Nhật ký canh tác</div>
@@ -425,7 +425,7 @@
       <p class="mock__note">Giao diện mô phỏng, dữ liệu minh họa, không phải dữ liệu nông hộ thật.</p>
     </div>
 
-    <p class="fb__note reveal">Kết nối hệ thống truy xuất nguồn gốc của Bộ NN&amp;MT từ <b>01/07/2026</b>; việc đồng bộ áp dụng cho các vùng trồng đã có mã. Kết nối GS1 Việt Nam theo lộ trình, dự kiến 11/2026. Giải pháp FarmBase do BVI và Salefronts đồng phát triển.</p>
+    <p class="fb__note reveal">Kết nối hệ thống truy xuất nguồn gốc của Bộ NN&amp;MT từ <b>01/07/2026</b>; việc đồng bộ áp dụng cho các vùng trồng đã có mã. Kết nối GS1 Việt Nam theo lộ trình, dự kiến 11/2026.</p>
   </div>
 </section>
 
@@ -437,11 +437,11 @@
       <h2 class="h2 split">Từ vườn nhà đến bản đồ xuất khẩu</h2>
       <p class="reveal">Đội ngũ hiện trường cùng HTX đi từng vườn, số hóa từng lô, chuẩn hóa điều kiện tại vườn và đồng hành đến khi vùng trồng được phê duyệt, rồi tiếp tục duy trì dữ liệu cả vụ.</p>
       <div class="journey__progress"><span id="jFill"></span></div>
-      <p class="journey__legal reveal">Việc cấp mã số vùng trồng thuộc thẩm quyền cơ quan quản lý nhà nước. Hiệp hội và FarmBase hỗ trợ kỹ thuật, hồ sơ và vận hành hệ thống truy xuất. Làm mã vùng trồng không ảnh hưởng quyền sử dụng đất; chủ vườn vẫn tự chủ việc mua bán.</p>
+      <p class="journey__legal reveal">Việc cấp mã số vùng trồng thuộc thẩm quyền cơ quan quản lý nhà nước. Hiệp hội hỗ trợ kỹ thuật, hồ sơ và vận hành hệ thống truy xuất. Làm mã vùng trồng không ảnh hưởng quyền sử dụng đất; chủ vườn vẫn tự chủ việc mua bán.</p>
     </div>
     <div class="journey__steps">
       <article class="jstep"><img src="assets/img/vuon-flycam.jpg" alt="Vùng trồng sầu riêng nhìn từ flycam" loading="lazy"><div><span>01</span><h3>Họp dân, khảo sát từng vườn</h3><p>Chốt danh sách hộ, đơn vị đứng mã (HTX hoặc tổ hợp tác). Khảo sát diện tích, số cây, tuổi cây, sản lượng, bay flycam.</p></div></article>
-      <article class="jstep"><img src="assets/img/mo-phong-ban-do-lo.svg" alt="Bản đồ lô mô phỏng trên FarmBase" loading="lazy"><div><span>02</span><h3>Số hóa lô thửa trên FarmBase</h3><p>Tọa độ, hình lô, số tờ, số thửa cho từng lô. Hệ thống là nguồn dữ liệu duy nhất, giấy tờ được bảo mật.</p></div></article>
+      <article class="jstep"><img src="assets/img/mo-phong-ban-do-lo.svg" alt="Bản đồ lô mô phỏng" loading="lazy"><div><span>02</span><h3>Số hóa lô thửa trên hệ thống</h3><p>Tọa độ, hình lô, số tờ, số thửa cho từng lô. Hệ thống là nguồn dữ liệu duy nhất, giấy tờ được bảo mật.</p></div></article>
       <article class="jstep"><img src="assets/img/bien-song-ngu.jpg" alt="Biển thông tin vùng trồng song ngữ Việt Trung" loading="lazy"><div><span>03</span><h3>Chuẩn hóa điều kiện tại vườn</h3><p>Biển song ngữ Việt – Trung, kho thuốc có khóa, bẫy giám sát sinh vật gây hại có số hiệu, điểm tập kết trái không chạm đất.</p></div></article>
       <article class="jstep"><img src="assets/img/tai-lieu-ispm6.jpg" alt="Tài liệu tập huấn ISPM 6 và sổ nhật ký vùng trồng" loading="lazy"><div><span>04</span><h3>Tập huấn &amp; nhật ký canh tác</h3><p>Tập huấn VietGAP, ISPM 6, ghi nhật ký, thời gian cách ly. Mỗi hộ có đủ bộ nhật ký, ghi liên tục cả vụ.</p></div></article>
       <article class="jstep"><img src="assets/img/kho-thuoc.jpg" alt="Kho chứa phân bón, thuốc BVTV có biển song ngữ" loading="lazy"><div><span>05</span><h3>Nộp hồ sơ, đón kiểm tra</h3><p>Hồ sơ nộp UBND xã qua Cổng Dịch vụ công quốc gia. Xã kiểm tra thực địa, tỉnh và Bộ NN&amp;MT gửi phía nước nhập khẩu xem xét.</p></div></article>
