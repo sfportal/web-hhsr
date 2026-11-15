@@ -1,10 +1,11 @@
 // API đăng ký hội viên và hội phí – Hiệp hội Sầu riêng tỉnh Đắk Lắk
 // Bảng dữ liệu: D1 "hhsr-hoivien". Quản trị bằng ADMIN_TOKEN (wrangler secret).
+// Thu hội phí qua sepay-thuchi (API v1, khóa SEPAY_API_KEY): tạo yêu cầu thu, kiểm tra trạng thái khi tiền về.
 
 const LOAI = ['ca_nhan', 'htx', 'doanh_nghiep', 'chuyen_gia'];
 const NHU_CAU = ['tap_huan', 'ma_vung_trong', 'truy_xuat', 'lien_ket'];
 const TT_DK = ['cho_duyet', 'da_duyet', 'tu_choi'];
-const TT_HP = ['cho_doi_soat', 'da_nhan', 'khong_khop'];
+const TT_HP = ['cho_thanh_toan', 'da_nhan', 'khong_khop'];
 
 const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
@@ -37,6 +38,39 @@ function newCode() {
   return 'HV-' + String(a[0] % 1000000).padStart(6, '0');
 }
 const csvCell = v => { const s = v == null ? '' : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+
+
+function fees(env) { try { const f = JSON.parse(env.FEES || '[]'); return Array.isArray(f) ? f.filter(x => x && x.id && Number.isInteger(x.amount) && x.amount > 0) : []; } catch { return []; } }
+
+async function sepay(env, method, path, body) {
+  if (!env.SEPAY_API_KEY) throw new Error('sepay_not_configured');
+  const init = { method, headers: { Authorization: `Bearer ${env.SEPAY_API_KEY}`, 'Content-Type': 'application/json' } };
+  if (body) init.body = JSON.stringify(body);
+  const url = 'https://sepay-thuchi/api/v1' + path;
+  const r = env.SEPAY ? await env.SEPAY.fetch(url, init) : await fetch((env.SEPAY_URL || '').replace(/\/$/, '') + '/api/v1' + path, init);
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 404) return null;
+  if (!r.ok || d.status !== 'success') throw new Error('sepay_' + r.status + (d.error ? '_' + (d.error.code || d.error) : ''));
+  return d.data;
+}
+
+// Trả về dòng hoi_phi mới nhất; nếu sepay báo đã thu đủ thì cập nhật "da_nhan"
+async function syncPayment(env, row) {
+  if (!row || !row.ma_thanh_toan || row.trang_thai === 'da_nhan') return row;
+  const pr = await sepay(env, 'GET', '/payment-requests/' + row.ma_thanh_toan);
+  if (pr && (pr.paid_amount || 0) !== row.da_tra || (pr && pr.status === 'paid')) {
+    const paid = pr.status === 'paid';
+    await env.DB.prepare(`UPDATE hoi_phi SET da_tra=?, tra_luc=COALESCE(?,tra_luc), trang_thai=CASE WHEN ? THEN 'da_nhan' ELSE trang_thai END, cap_nhat_luc=datetime('now') WHERE id=?`)
+      .bind(pr.paid_amount || 0, paid ? pr.paid_at || null : null, paid ? 1 : 0, row.id).run();
+    return env.DB.prepare('SELECT * FROM hoi_phi WHERE id=?').bind(row.id).first();
+  }
+  return row;
+}
+const payView = (row, pr) => ({
+  ma_thanh_toan: row.ma_thanh_toan, so_tien: row.so_tien, da_tra: row.da_tra, nam: row.nam,
+  trang_thai: row.trang_thai, da_nhan: row.trang_thai === 'da_nhan',
+  ...(pr ? { qr: pr.qr_image_url, ngan_hang: pr.bank, so_tai_khoan: pr.account_number, noi_dung_ck: pr.transfer_content } : {})
+});
 
 export default {
   async fetch(req, env) {
@@ -73,16 +107,46 @@ export default {
         return json({ ok: false, error: 'busy' }, 503, h);
       }
 
+      if (p === '/api/hoi-phi/muc-phi' && req.method === 'GET') {
+        return json({ ok: true, fees: fees(env).map(({ id, label, amount }) => ({ id, label, amount })), san_sang: !!env.SEPAY_API_KEY && fees(env).length > 0 }, 200, h);
+      }
+
+      // Tạo (hoặc lấy lại) yêu cầu thu hội phí cho một hội viên trong một năm
       if (p === '/api/hoi-phi' && req.method === 'POST') {
         const b = await req.json().catch(() => ({}));
-        if (b.website) return json({ ok: true }, 200, h);
-        const ma = str(b.ma_ho_so, 20).toUpperCase(), nam = parseInt(b.nam, 10), y = new Date().getUTCFullYear();
-        if (!/^(HV-\d{6}|0\d{9})$/.test(ma) || !(nam >= y - 1 && nam <= y + 1)) return json({ ok: false, error: 'invalid' }, 400, h);
-        const soTien = Number.isInteger(b.so_tien) && b.so_tien >= 0 && b.so_tien < 1e9 ? b.so_tien : null;
-        const dup = await env.DB.prepare("SELECT id FROM hoi_phi WHERE ma_ho_so=? AND nam=? AND tao_luc > datetime('now','-10 minutes') LIMIT 1").bind(ma, nam).first();
-        if (!dup) await env.DB.prepare('INSERT INTO hoi_phi (ma_ho_so,nam,muc_phi,so_tien,noi_dung_ck) VALUES (?,?,?,?,?)')
-          .bind(ma, nam, str(b.muc_phi, 40) || null, soTien, str(b.noi_dung_ck, 60) || null).run();
-        return json({ ok: true }, 201, h);
+        if (b.website) return json({ ok: false, error: 'invalid' }, 400, h);
+        const y = new Date().getUTCFullYear(), nam = parseInt(b.nam, 10);
+        if (!(nam >= y - 1 && nam <= y + 1)) return json({ ok: false, error: 'invalid' }, 400, h);
+        const fee = fees(env).find(f => f.id === b.muc_phi);
+        if (!fee) return json({ ok: false, error: 'fee_not_configured' }, 400, h);
+        const id = str(b.ma_ho_so, 20).toUpperCase().replace(/\s/g, '');
+        let hv = null;
+        if (/^HV-?\d{6}$/.test(id)) hv = await env.DB.prepare('SELECT ma_ho_so, ho_ten, trang_thai FROM dang_ky_hoi_vien WHERE ma_ho_so=?').bind(id.replace(/^HV-?/, 'HV-')).first();
+        else if (/^0\d{9}$/.test(id)) hv = await env.DB.prepare('SELECT ma_ho_so, ho_ten, trang_thai FROM dang_ky_hoi_vien WHERE dien_thoai=? ORDER BY id DESC LIMIT 1').bind(id).first();
+        else return json({ ok: false, error: 'invalid' }, 400, h);
+        if (!hv) return json({ ok: false, error: 'member_not_found' }, 404, h);
+        if (hv.trang_thai === 'tu_choi') return json({ ok: false, error: 'member_rejected' }, 403, h);
+
+        const code = `HHSR${hv.ma_ho_so.slice(3)}N${String(nam).slice(2)}`; // VD: HHSR858506N26
+        let row = await env.DB.prepare('SELECT * FROM hoi_phi WHERE ma_ho_so=? AND nam=?').bind(hv.ma_ho_so, nam).first();
+        if (row && row.trang_thai === 'da_nhan') return json({ ok: true, ma_ho_so: hv.ma_ho_so, ...payView(row) }, 200, h);
+        let pr = await sepay(env, 'GET', '/payment-requests/' + code);
+        if (!pr) pr = await sepay(env, 'POST', '/payment-requests', { code, amount: fee.amount, customer: `${hv.ma_ho_so} ${hv.ho_ten}`.slice(0, 120), description: `Hội phí ${nam} – Hiệp hội Sầu riêng Đắk Lắk` });
+        if (!row) {
+          await env.DB.prepare('INSERT INTO hoi_phi (ma_ho_so,nam,muc_phi,so_tien,ma_thanh_toan) VALUES (?,?,?,?,?)').bind(hv.ma_ho_so, nam, fee.id, pr.amount, pr.code).run();
+          row = await env.DB.prepare('SELECT * FROM hoi_phi WHERE ma_ho_so=? AND nam=?').bind(hv.ma_ho_so, nam).first();
+        }
+        row = await syncPayment(env, row);
+        return json({ ok: true, ma_ho_so: hv.ma_ho_so, ...payView(row, pr) }, 200, h);
+      }
+
+      // Kiểm tra trạng thái thanh toán (trang web hỏi định kỳ)
+      let ms;
+      if ((ms = p.match(/^\/api\/hoi-phi\/trang-thai\/(HHSR\d{6}N\d{2})$/)) && req.method === 'GET') {
+        let row = await env.DB.prepare('SELECT * FROM hoi_phi WHERE ma_thanh_toan=?').bind(ms[1]).first();
+        if (!row) return json({ ok: false, error: 'not_found' }, 404, h);
+        row = await syncPayment(env, row);
+        return json({ ok: true, ...payView(row) }, 200, h);
       }
 
       /* ---------- quản trị ---------- */
@@ -98,7 +162,9 @@ export default {
           const q = states.includes(tt)
             ? env.DB.prepare(`SELECT * FROM ${table} WHERE trang_thai=? ORDER BY id DESC LIMIT 2000`).bind(tt)
             : env.DB.prepare(`SELECT * FROM ${table} ORDER BY id DESC LIMIT 2000`);
-          const { results } = await q.all();
+          let { results } = await q.all();
+          if (table === 'hoi_phi' && url.searchParams.get('dong_bo') === '1' && env.SEPAY_API_KEY)
+            for (const r of results.filter(r => r.trang_thai === 'cho_thanh_toan').slice(0, 40)) { try { Object.assign(r, await syncPayment(env, r)); } catch (_) {} }
           if (m[3]) {
             const cols = results.length ? Object.keys(results[0]) : [];
             const csv = '﻿' + [cols.join(','), ...results.map(r => cols.map(c => csvCell(r[c])).join(','))].join('\n');
@@ -120,7 +186,8 @@ export default {
       return json({ ok: false, error: 'not_found' }, 404, h);
     } catch (e) {
       console.error(e);
-      return json({ ok: false, error: 'server' }, 500, h);
+      const em = String(e && e.message || e);
+      return json({ ok: false, error: em.startsWith('sepay') ? 'payment_unavailable' : 'server' }, em.startsWith('sepay') ? 502 : 500, h);
     }
   }
 };

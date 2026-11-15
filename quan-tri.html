@@ -38,7 +38,7 @@ th,td{text-align:left;padding:11px 12px;border-bottom:1px solid #efe9d6;vertical
 th{background:#f6f1df;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);position:sticky;top:0}
 td small{color:var(--muted);display:block}
 .tag{display:inline-block;border-radius:999px;padding:3px 10px;font-size:.75rem;font-weight:700}
-.t-cho_duyet,.t-cho_doi_soat{background:#fff4c7;color:#7a5a00}.t-da_duyet,.t-da_nhan{background:#dff3d8;color:#1f5e26}.t-tu_choi,.t-khong_khop{background:#fde2df;color:var(--red)}
+.t-cho_duyet,.t-cho_thanh_toan{background:#fff4c7;color:#7a5a00}.t-da_duyet,.t-da_nhan{background:#dff3d8;color:#1f5e26}.t-tu_choi,.t-khong_khop{background:#fde2df;color:var(--red)}
 .act{display:flex;gap:6px;flex-wrap:wrap}.act button{border:1px solid #d7d2bd;background:#fff;border-radius:999px;padding:5px 12px;font-size:.8rem;cursor:pointer}
 .act .ok{border-color:var(--g5);color:var(--g5)}.act .no{border-color:var(--red);color:var(--red)}
 .empty{padding:40px;text-align:center;color:var(--muted)}
@@ -73,8 +73,8 @@ td small{color:var(--muted);display:block}
   const $ = s => document.querySelector(s);
   const LOAI = { ca_nhan: 'Nhà vườn, cá nhân', htx: 'HTX, tổ hợp tác', doanh_nghiep: 'Doanh nghiệp', chuyen_gia: 'Nhà khoa học, chuyên gia' };
   const NC = { tap_huan: 'Tập huấn', ma_vung_trong: 'Mã vùng trồng', truy_xuat: 'Truy xuất', lien_ket: 'Liên kết tiêu thụ' };
-  const TT = { cho_duyet: 'Chờ duyệt', da_duyet: 'Đã duyệt', tu_choi: 'Từ chối', cho_doi_soat: 'Chờ đối soát', da_nhan: 'Đã nhận', khong_khop: 'Không khớp' };
-  const STATES = { 'dang-ky': ['cho_duyet', 'da_duyet', 'tu_choi'], 'hoi-phi': ['cho_doi_soat', 'da_nhan', 'khong_khop'] };
+  const TT = { cho_duyet: 'Chờ duyệt', da_duyet: 'Đã duyệt', tu_choi: 'Từ chối', cho_thanh_toan: 'Chờ thanh toán', da_nhan: 'Đã nhận', khong_khop: 'Không khớp' };
+  const STATES = { 'dang-ky': ['cho_duyet', 'da_duyet', 'tu_choi'], 'hoi-phi': ['cho_thanh_toan', 'da_nhan', 'khong_khop'] };
   let tok = sessionStorage.getItem('hhsr_tok') || '', view = 'dang-ky', rows = [];
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const money = n => n == null ? '' : new Intl.NumberFormat('vi-VN').format(n) + ' đ';
@@ -101,15 +101,15 @@ td small{color:var(--muted);display:block}
     $('#f').innerHTML = '<option value="">Tất cả trạng thái</option>' + STATES[v].map(s => `<option value="${s}">${TT[s]}</option>`).join('');
     $('#th').innerHTML = v === 'dang-ky'
       ? '<tr><th>Mã hồ sơ</th><th>Hội viên</th><th>Liên hệ</th><th>Địa bàn</th><th>Quan tâm</th><th>Ngày gửi</th><th>Trạng thái</th><th></th></tr>'
-      : '<tr><th>Mã hồ sơ / SĐT</th><th>Năm</th><th>Mức phí</th><th>Số tiền</th><th>Nội dung CK</th><th>Ngày báo</th><th>Trạng thái</th><th></th></tr>';
+      : '<tr><th>Mã hồ sơ</th><th>Năm</th><th>Mức phí</th><th>Số tiền</th><th>Đã chuyển</th><th>Mã thanh toán</th><th>Ngày tạo / trả</th><th>Trạng thái</th><th></th></tr>';
     load();
   }
   document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
 
   async function load() {
-    $('#tb').innerHTML = '<tr><td colspan="8" class="empty">Đang tải…</td></tr>';
-    try { rows = (await (await call('/api/admin/' + view)).json()).rows || []; render(); }
-    catch (e) { $('#tb').innerHTML = `<tr><td colspan="8" class="empty">${esc(e.message)}</td></tr>`; }
+    $('#tb').innerHTML = '<tr><td colspan="9" class="empty">Đang tải…</td></tr>';
+    try { rows = (await (await call('/api/admin/' + view + (view === 'hoi-phi' ? '?dong_bo=1' : ''))).json()).rows || []; render(); }
+    catch (e) { $('#tb').innerHTML = `<tr><td colspan="9" class="empty">${esc(e.message)}</td></tr>`; }
   }
   function render() {
     const q = $('#q').value.trim().toLowerCase(), f = $('#f').value;
@@ -118,11 +118,11 @@ td small{color:var(--muted);display:block}
     const st = STATES[view];
     $('#stats').innerHTML = `<div class="stat"><small>Tổng</small><b>${rows.length}</b></div>` + st.map(s => `<div class="stat"><small>${TT[s]}</small><b>${cnt(s)}</b></div>`).join('') +
       (view === 'hoi-phi' ? `<div class="stat"><small>Đã nhận (tiền)</small><b style="font-size:1.25rem">${money(rows.filter(r => r.trang_thai === 'da_nhan').reduce((a, r) => a + (r.so_tien || 0), 0))}</b></div>` : '');
-    if (!list.length) { $('#tb').innerHTML = '<tr><td colspan="8" class="empty">Chưa có dữ liệu</td></tr>'; return; }
+    if (!list.length) { $('#tb').innerHTML = '<tr><td colspan="9" class="empty">Chưa có dữ liệu</td></tr>'; return; }
     const btns = r => st.filter(s => s !== r.trang_thai).map(s => `<button class="${s === st[1] ? 'ok' : s === st[2] ? 'no' : ''}" data-id="${r.id}" data-s="${s}">${TT[s]}</button>`).join('');
     $('#tb').innerHTML = list.map(r => view === 'dang-ky'
       ? `<tr><td><b>${esc(r.ma_ho_so)}</b></td><td><b>${esc(r.ho_ten)}</b><small>${esc(LOAI[r.loai] || r.loai)}${r.nguoi_dai_dien ? ' · ĐD: ' + esc(r.nguoi_dai_dien) : ''}</small></td><td><a href="tel:${esc(r.dien_thoai)}">${esc(r.dien_thoai)}</a><small>${esc(r.email || '')}</small></td><td>${esc(r.xa_phuong)}<small>${r.dien_tich_ha != null ? esc(r.dien_tich_ha) + ' ha' : ''}</small></td><td>${esc((r.nhu_cau || '').split(',').filter(Boolean).map(x => NC[x] || x).join(', '))}</td><td>${when(r.tao_luc)}</td><td><span class="tag t-${r.trang_thai}">${TT[r.trang_thai]}</span>${r.ghi_chu ? `<small>${esc(r.ghi_chu)}</small>` : ''}</td><td><div class="act">${btns(r)}</div></td></tr>`
-      : `<tr><td><b>${esc(r.ma_ho_so)}</b></td><td>${esc(r.nam)}</td><td>${esc(r.muc_phi || '')}</td><td>${money(r.so_tien)}</td><td>${esc(r.noi_dung_ck || '')}</td><td>${when(r.tao_luc)}</td><td><span class="tag t-${r.trang_thai}">${TT[r.trang_thai]}</span>${r.ghi_chu ? `<small>${esc(r.ghi_chu)}</small>` : ''}</td><td><div class="act">${btns(r)}</div></td></tr>`).join('');
+      : `<tr><td><b>${esc(r.ma_ho_so)}</b></td><td>${esc(r.nam)}</td><td>${esc(r.muc_phi || '')}</td><td>${money(r.so_tien)}</td><td>${money(r.da_tra)}</td><td>${esc(r.ma_thanh_toan || '')}</td><td>${when(r.tao_luc)}${r.tra_luc ? `<small>Trả: ${esc(r.tra_luc)}</small>` : ''}</td><td><span class="tag t-${r.trang_thai}">${TT[r.trang_thai]}</span>${r.ghi_chu ? `<small>${esc(r.ghi_chu)}</small>` : ''}</td><td><div class="act">${btns(r)}</div></td></tr>`).join('');
   }
   $('#tb').addEventListener('click', async e => {
     const b = e.target.closest('button[data-id]'); if (!b) return;

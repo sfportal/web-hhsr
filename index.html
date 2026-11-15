@@ -528,21 +528,35 @@
           <label class="f"><span>Năm hội phí *</span><select name="nam" id="hvYear"></select></label>
         </div>
         <label class="f" id="hvFeeWrap"><span>Mức hội phí *</span><select name="muc_phi" id="hvFee"></select></label>
-        <div class="hvqr" id="hvQr">
-          <div class="hvqr__img"><img id="hvQrImg" alt="Mã QR chuyển khoản hội phí" hidden><div class="hvqr__ph" id="hvQrPh">Nhập mã hồ sơ để tạo mã QR</div></div>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="hvform__msg" role="status"></p>
+        <button class="btn btn--gold hvform__go" type="submit">Tạo mã QR thanh toán <span>→</span></button>
+      </form>
+
+      <div class="hvbill" id="hvBill" hidden>
+        <div class="hvqr">
+          <div class="hvqr__img"><img id="hvQrImg" alt="Mã QR chuyển khoản hội phí"></div>
           <div class="hvqr__info">
+            <p><small>Hội viên</small><b id="hvBillWho">…</b></p>
             <p><small>Ngân hàng</small><b id="hvBank">…</b></p>
             <p><small>Số tài khoản</small><b id="hvAcc">…</b></p>
-            <p><small>Chủ tài khoản</small><b id="hvName">…</b></p>
             <p><small>Số tiền</small><b id="hvAmt">…</b></p>
             <p><small>Nội dung chuyển khoản</small><b id="hvMemo">…</b> <button type="button" class="hvqr__copy" id="hvCopy">Sao chép</button></p>
           </div>
         </div>
-        <p class="hvform__hint">Quét mã bằng ứng dụng ngân hàng bất kỳ. Giữ nguyên nội dung chuyển khoản để Hiệp hội đối soát. Biên nhận hội phí sẽ được gửi sau khi Hiệp hội xác nhận.</p>
-        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="hvform__msg" role="status"></p>
-        <button class="btn btn--gold hvform__go" type="submit">Tôi đã chuyển khoản <span>→</span></button>
-      </form>
+        <div class="hvwait" id="hvWait"><i></i><span>Đang chờ tiền về. Trang sẽ tự xác nhận khi Hiệp hội nhận được chuyển khoản.</span></div>
+        <p class="hvform__hint">Quét mã bằng ứng dụng ngân hàng bất kỳ, giữ nguyên số tiền và nội dung chuyển khoản.</p>
+        <div class="hvbill__acts"><button class="btn btn--gold" type="button" id="hvCheck">Tôi đã chuyển khoản</button><button class="hvlink" type="button" id="hvBack">← Đổi thông tin</button></div>
+      </div>
+
+      <div class="hvdone" id="hvPaid" hidden>
+        <div class="hvdone__ic">✓</div>
+        <h3>Đã nhận hội phí</h3>
+        <p id="hvPaidTxt">Cảm ơn bạn đã đồng hành cùng Hiệp hội.</p>
+        <div class="hvdone__code" id="hvPaidCode"></div>
+        <p class="hvdone__note">Hiệp hội sẽ gửi biên nhận hội phí cho bạn. Bạn có thể chụp lại màn hình này để lưu.</p>
+        <button class="hvlink" type="button" id="hvAgain">← Đóng cho năm hoặc hội viên khác</button>
+      </div>
     </div>
   </div>
 </section>

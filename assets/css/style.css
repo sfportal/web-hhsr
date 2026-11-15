@@ -621,3 +621,13 @@ body.modal-open{overflow:hidden}
   .hvcard__tabs button{font-size:.88rem;padding:11px 6px}
 }
 .hvcard [hidden]{display:none!important}
+.hvbill{position:relative;display:grid;gap:16px}
+.hvbill__acts{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hvbill__acts .btn{border:0;cursor:pointer;font-family:var(--font)}
+.hvlink{background:none;border:0;color:rgba(255,255,255,.7);font:600 .9rem var(--font);cursor:pointer}
+.hvlink:hover{color:var(--gold)}
+.hvwait{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:14px;background:rgba(140,198,63,.12);border:1px solid rgba(140,198,63,.35);font-size:.9rem}
+.hvwait i{width:10px;height:10px;border-radius:50%;background:var(--leaf);flex:none;box-shadow:0 0 0 0 rgba(140,198,63,.7);animation:hvping 1.6s infinite}
+.hvwait.stop{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15)}
+.hvwait.stop i{animation:none;background:#999}
+@keyframes hvping{70%{box-shadow:0 0 0 12px rgba(140,198,63,0)}100%{box-shadow:0 0 0 0 rgba(140,198,63,0)}}

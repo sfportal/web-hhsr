@@ -5,6 +5,16 @@ workers_dev = true
 
 [vars]
 ALLOWED_ORIGINS = "https://sfportal.github.io,http://localhost:8765"
+# Mức hội phí theo năm (đồng), đúng theo quy định của Hiệp hội. Ví dụ:
+# FEES = '[{"id":"ca_nhan","label":"Hội viên cá nhân","amount":200000}]'
+FEES = "[]"
+# Dùng khi không có service binding (chạy thử ở máy)
+SEPAY_URL = "https://sepay-thuchi.sfportal.workers.dev"
+
+# Gọi thẳng worker sepay-thuchi trong cùng tài khoản Cloudflare
+[[services]]
+binding = "SEPAY"
+service = "sepay-thuchi"
 
 [[d1_databases]]
 binding = "DB"

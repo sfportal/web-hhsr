@@ -4,10 +4,10 @@
   const card = document.getElementById('hvcard');
   if (!card) return;
   const $ = (s, r = document) => r.querySelector(s);
-  const reg = $('#hvReg'), pay = $('#hvPay'), done = $('#hvDone');
+  const reg = $('#hvReg'), pay = $('#hvPay'), done = $('#hvDone'), bill = $('#hvBill'), paid = $('#hvPaid');
+  let payPane = pay;
   const tabs = [...card.querySelectorAll('.hvcard__tabs button')], pill = $('.hvcard__pill', card);
   const fmt = n => new Intl.NumberFormat('vi-VN').format(n) + ' đ';
-  const bankReady = !!(C.bank && C.bank.id && C.bank.account);
   const hasGsap = typeof gsap !== 'undefined';
 
   /* ---------- tabs ---------- */
@@ -18,8 +18,8 @@
     const regDone = reg.dataset.sent === '1';
     reg.hidden = !(t === 'dk' && !regDone);
     done.hidden = !(t === 'dk' && regDone);
-    pay.hidden = t !== 'phi';
-    const vis = [reg, done, pay].find(e => !e.hidden);
+    [pay, bill, paid].forEach(x => x.hidden = !(t === 'phi' && x === payPane));
+    const vis = [reg, done, pay, bill, paid].find(e => !e.hidden);
     if (hasGsap) gsap.fromTo(vis, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: .5, ease: 'power3.out' });
     if (window.ScrollTrigger) ScrollTrigger.refresh();
   }
@@ -42,7 +42,9 @@
   async function api(path, body) {
     const base = (C.api || '').replace(/\/$/, '');
     if (!base) throw new Error('offline');
-    const r = await fetch(base + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    let r;
+    try { r = await fetch(base + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+    catch (_) { throw new Error('offline'); }
     const d = await r.json().catch(() => ({}));
     if (!r.ok || !d.ok) throw new Error(d.error || 'http ' + r.status);
     return d;
@@ -73,7 +75,7 @@
       const { ma_ho_so: code } = await api('/api/dang-ky', { ...row, website: reg.website.value });
       reg.dataset.sent = '1'; msg(reg, '', true);
       $('#hvCode').textContent = code;
-      pay.ma_ho_so.value = code; updateQr();
+      pay.ma_ho_so.value = code;
       show('dk');
       if (hasGsap) gsap.from('.hvdone__ic', { scale: 0, rotate: -90, duration: .8, ease: 'back.out(2)' });
     } catch (err) {
@@ -82,51 +84,79 @@
   });
   $('#hvToPay').addEventListener('click', () => show('phi'));
 
-  /* ---------- pay ---------- */
+  /* ---------- pay (sepay-thuchi) ---------- */
   const yearSel = $('#hvYear'), feeSel = $('#hvFee'), y0 = new Date().getFullYear();
   [y0, y0 + 1].forEach(y => yearSel.add(new Option(y, y)));
-  if (C.fees && C.fees.length) C.fees.forEach(fe => feeSel.add(new Option(`${fe.label} · ${fmt(fe.amount)}`, fe.id)));
-  else $('#hvFeeWrap').style.display = 'none';
-  $('#hvBank').textContent = bankReady ? (C.bank.name || C.bank.id) : 'Đang cập nhật';
-  $('#hvAcc').textContent = bankReady ? C.bank.account : 'Đang cập nhật';
-  $('#hvName').textContent = bankReady ? (C.bank.holder || '') : 'Đang cập nhật';
-
-  const fee = () => (C.fees || []).find(x => x.id === feeSel.value);
-  const memo = () => { const id = pay.ma_ho_so.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, ''); return id ? `HHSR ${id} ${yearSel.value}` : ''; };
-  let qrT;
-  function updateQr() {
-    const m = memo(), fe = fee();
-    $('#hvMemo').textContent = m || '…';
-    $('#hvAmt').textContent = fe ? fmt(fe.amount) : 'Theo mức Hiệp hội thông báo';
-    const img = $('#hvQrImg'), ph = $('#hvQrPh');
-    if (!bankReady) { img.hidden = true; ph.hidden = false; ph.textContent = `Hiệp hội đang cập nhật tài khoản nhận hội phí. Liên hệ ${C.hotline || '094 188 82 39'}.`; return; }
-    if (!m) { img.hidden = true; ph.hidden = false; ph.textContent = 'Nhập mã hồ sơ để tạo mã QR'; return; }
-    clearTimeout(qrT);
-    qrT = setTimeout(() => {
-      const q = new URLSearchParams({ addInfo: m, accountName: C.bank.holder || '' });
-      if (fe) q.set('amount', fe.amount);
-      img.onload = () => { img.hidden = false; ph.hidden = true; if (hasGsap) gsap.fromTo(img, { scale: .85, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .5, ease: 'back.out(1.6)' }); };
-      img.src = `https://img.vietqr.io/image/${encodeURIComponent(C.bank.id)}-${encodeURIComponent(C.bank.account)}-compact2.png?${q}`;
-    }, 350);
+  let payReady = false;
+  async function loadFees() {
+    try {
+      const base = (C.api || '').replace(/\/$/, ''); if (!base) throw 0;
+      const d = await (await fetch(base + '/api/hoi-phi/muc-phi')).json();
+      d.fees.forEach(fe => feeSel.add(new Option(`${fe.label} · ${fmt(fe.amount)}`, fe.id)));
+      payReady = d.san_sang;
+      if (d.fees.length < 2) $('#hvFeeWrap').style.display = d.fees.length ? 'none' : '';
+    } catch (_) { payReady = false; }
+    if (!payReady) { $('#hvFeeWrap').style.display = 'none'; msg(pay, `Thu hội phí trực tuyến đang được kích hoạt. Vui lòng liên hệ ${C.hotline || '094 188 82 39'}.`); }
   }
-  pay.addEventListener('input', updateQr); pay.addEventListener('change', updateQr); updateQr();
-  $('#hvCopy').addEventListener('click', async () => {
-    const m = memo(); if (!m) return;
-    try { await navigator.clipboard.writeText(m); $('#hvCopy').textContent = 'Đã chép'; setTimeout(() => $('#hvCopy').textContent = 'Sao chép', 1600); } catch (_) {}
-  });
+  loadFees();
+
+  const payPanes = [pay, bill, paid];
+  function payShow(el) {
+    payPanes.forEach(x => x.hidden = x !== el);
+    if (hasGsap) gsap.fromTo(el, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: .5, ease: 'power3.out' });
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+
+  let poll, pollEnd = 0, cur = null;
+  function setPaid(d) {
+    clearInterval(poll);
+    $('#hvPaidCode').textContent = d.ma_thanh_toan || '';
+    $('#hvPaidTxt').textContent = `Hội phí năm ${d.nam} (${fmt(d.so_tien)}) đã được ghi nhận. Cảm ơn bạn đã đồng hành cùng Hiệp hội.`;
+    payPane = paid; payShow(paid);
+    if (hasGsap) gsap.from('#hvPaid .hvdone__ic', { scale: 0, rotate: -90, duration: .8, ease: 'back.out(2)' });
+  }
+  async function check(manual) {
+    if (!cur) return;
+    try {
+      const base = C.api.replace(/\/$/, '');
+      const d = await (await fetch(`${base}/api/hoi-phi/trang-thai/${cur}`)).json();
+      if (d.da_nhan) return setPaid(d);
+      if (manual) $('#hvWait span').textContent = d.da_tra ? `Đã nhận ${fmt(d.da_tra)}, còn thiếu ${fmt(d.so_tien - d.da_tra)}. Vui lòng chuyển phần còn lại với cùng nội dung.` : 'Chưa thấy tiền về. Ngân hàng có thể chậm vài phút, trang vẫn đang tự kiểm tra.';
+    } catch (_) {}
+    if (Date.now() > pollEnd) { clearInterval(poll); $('#hvWait').classList.add('stop'); $('#hvWait span').textContent = 'Đã ngừng tự kiểm tra. Bấm "Tôi đã chuyển khoản" để kiểm tra lại.'; }
+  }
+  function startPoll() { clearInterval(poll); pollEnd = Date.now() + 15 * 60e3; $('#hvWait').classList.remove('stop'); poll = setInterval(() => check(false), 5000); }
 
   pay.addEventListener('submit', async e => {
     e.preventDefault();
     if (pay.website.value) return;
+    if (!payReady) { msg(pay, `Thu hội phí trực tuyến đang được kích hoạt. Vui lòng liên hệ ${C.hotline || '094 188 82 39'}.`); return; }
     if (!pay.ma_ho_so.value.trim()) { msg(pay, 'Vui lòng nhập mã hồ sơ hoặc số điện thoại.'); pay.ma_ho_so.focus(); return; }
-    if (!bankReady) { msg(pay, offlineMsg()); return; }
-    const fe = fee();
-    busy(pay, true); msg(pay, 'Đang ghi nhận…', true);
+    busy(pay, true); msg(pay, 'Đang tạo mã thanh toán…', true);
     try {
-      await api('/api/hoi-phi', { ma_ho_so: pay.ma_ho_so.value.trim().toUpperCase(), nam: Number(yearSel.value), muc_phi: fe ? fe.id : null, so_tien: fe ? fe.amount : null, noi_dung_ck: memo() });
-      msg(pay, 'Đã ghi nhận. Hiệp hội sẽ đối soát và gửi biên nhận hội phí cho bạn.', true);
+      const d = await api('/api/hoi-phi', { ma_ho_so: pay.ma_ho_so.value.trim(), nam: Number(yearSel.value), muc_phi: feeSel.value, website: pay.website.value });
+      msg(pay, '', true);
+      cur = d.ma_thanh_toan;
+      if (d.da_nhan) return setPaid(d);
+      $('#hvBillWho').textContent = d.ma_ho_so + ' · năm ' + d.nam;
+      $('#hvBank').textContent = d.ngan_hang || '…'; $('#hvAcc').textContent = d.so_tai_khoan || '…';
+      $('#hvAmt').textContent = d.da_tra ? `${fmt(d.so_tien - d.da_tra)} (còn thiếu)` : fmt(d.so_tien);
+      $('#hvMemo').textContent = d.noi_dung_ck || d.ma_thanh_toan;
+      $('#hvWait span').textContent = 'Đang chờ tiền về. Trang sẽ tự xác nhận khi Hiệp hội nhận được chuyển khoản.';
+      const img = $('#hvQrImg'); img.src = d.qr || '';
+      payPane = bill; payShow(bill);
+      if (hasGsap) gsap.fromTo(img, { scale: .85, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .6, delay: .15, ease: 'back.out(1.6)' });
+      startPoll();
     } catch (err) {
-      msg(pay, err.message === 'offline' ? offlineMsg() : 'Chưa ghi nhận được, vui lòng thử lại sau ít phút.');
+      const M = { member_not_found: 'Không tìm thấy hồ sơ. Hãy kiểm tra lại mã hồ sơ hoặc số điện thoại đã đăng ký.', member_rejected: 'Hồ sơ này chưa được kết nạp. Vui lòng liên hệ Hiệp hội.', fee_not_configured: 'Mức hội phí chưa được thiết lập. Vui lòng liên hệ Hiệp hội.', offline: `Thu hội phí trực tuyến đang được kích hoạt. Vui lòng liên hệ ${C.hotline || '094 188 82 39'}.` };
+      msg(pay, M[err.message] || 'Chưa tạo được mã thanh toán, vui lòng thử lại sau ít phút.');
     } finally { busy(pay, false); }
   });
+  $('#hvCheck').addEventListener('click', () => { if (Date.now() > pollEnd) startPoll(); check(true); });
+  $('#hvBack').addEventListener('click', () => { clearInterval(poll); payPane = pay; payShow(pay); });
+  $('#hvAgain').addEventListener('click', () => { cur = null; payPane = pay; payShow(pay); });
+  $('#hvCopy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText($('#hvMemo').textContent); $('#hvCopy').textContent = 'Đã chép'; setTimeout(() => $('#hvCopy').textContent = 'Sao chép', 1600); } catch (_) {}
+  });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && cur && !bill.hidden) check(false); });
 })();

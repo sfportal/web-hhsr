@@ -26,5 +26,7 @@ jobs:
           workingDirectory: worker
           secrets: |
             ADMIN_TOKEN
+            SEPAY_API_KEY
         env:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          SEPAY_API_KEY: ${{ secrets.SEPAY_API_KEY }}

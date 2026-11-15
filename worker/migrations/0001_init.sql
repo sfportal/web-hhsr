@@ -22,10 +22,13 @@ CREATE TABLE IF NOT EXISTS hoi_phi (
   nam INTEGER NOT NULL,
   muc_phi TEXT,
   so_tien INTEGER,
-  noi_dung_ck TEXT,
-  trang_thai TEXT NOT NULL DEFAULT 'cho_doi_soat' CHECK (trang_thai IN ('cho_doi_soat','da_nhan','khong_khop')),
+  ma_thanh_toan TEXT UNIQUE,
+  da_tra INTEGER NOT NULL DEFAULT 0,
+  tra_luc TEXT,
+  trang_thai TEXT NOT NULL DEFAULT 'cho_thanh_toan' CHECK (trang_thai IN ('cho_thanh_toan','da_nhan','khong_khop')),
   ghi_chu TEXT,
   tao_luc TEXT NOT NULL DEFAULT (datetime('now')),
-  cap_nhat_luc TEXT
+  cap_nhat_luc TEXT,
+  UNIQUE (ma_ho_so, nam)
 );
-CREATE INDEX IF NOT EXISTS idx_hp_ma ON hoi_phi(ma_ho_so);
+CREATE INDEX IF NOT EXISTS idx_hp_tt ON hoi_phi(trang_thai);
